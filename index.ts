@@ -118,7 +118,7 @@ export const value = {
     const type = typeOf(value);
     const encoder = encoders[type];
     if (typeof encoder !== 'function') {
-      throw new TypeError(`Unable to infer type for "${value}".`);
+      return wrap(Kind.String, "Not parsable");
     }
     return encoder(value);
   },
