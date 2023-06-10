@@ -71,6 +71,15 @@ enum Kind {
 
 const toString = Object.prototype.toString;
 
+const typesToParse = [
+  typeOf({}),
+  typeOf([]),
+  typeOf(0),
+  typeOf(''),
+  typeOf(true),
+  typeOf(null)
+];
+
 const encoders = {
   [typeOf({})]: v => wrap(Kind.Struct, struct.encode(v)),
   [typeOf([])]: v => wrap(Kind.List, list.encode(v)),
@@ -118,7 +127,7 @@ export const value = {
     const type = typeOf(value);
     const encoder = encoders[type];
     if (typeof encoder !== 'function') {
-      return wrap(Kind.String, "Not parsable");
+      return wrap(Kind.String, value?.toString ? value.toString() : 'Not parsable');
     }
     return encoder(value);
   },

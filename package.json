@@ -1,6 +1,6 @@
 {
-  "name": "pb-util",
-  "version": "1.0.3",
+  "name": "pb-util-skip-unknown",
+  "version": "1.0.9",
   "description": "Utilities for working with common protobuf types",
   "main": "build",
   "files": [
