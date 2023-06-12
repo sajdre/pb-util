@@ -116,6 +116,8 @@ function getKind(value: Value): string | null {
 /**
  * Used to encode/decode {@link Value} objects.
  */
+
+const objectType = typeOf({});
 export const value = {
   /**
    * Encodes a JSON value into a protobuf {@link Value}.
@@ -125,6 +127,9 @@ export const value = {
    */
   encode(value: JsonValue): Value {
     const type = typeOf(value);
+    if (type === objectType && value?.toString && value?.toString !== Object.prototype.toString) {
+      return wrap(Kind.String, value?.toString() || 'To string error');
+    }
     const encoder = encoders[type];
     if (typeof encoder !== 'function') {
       return wrap(Kind.String, value?.toString ? value.toString() : 'Not parsable');
